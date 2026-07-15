@@ -94,7 +94,10 @@ def predict_price(input_data):
         else:
 
             recommendation = (
-                "The predicted price represents a fair market estimate based on similar used vehicles. Buyers can use this estimate during negotiations, while sellers may consider listing slightly above the predicted value depending on vehicle condition, maintenance history, and local demand."
+                "The predicted price represents a fair market estimate based on similar used vehicles."
+                "Buyers can use this estimate during negotiations, while sellers may consider listing "
+                "slightly above the predicted value depending on vehicle condition, "
+                "maintenance history, and local demand."
             )
 
         return {
