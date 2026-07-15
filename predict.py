@@ -23,7 +23,6 @@ PREPROCESSOR_PATH = os.path.join(
 model = joblib.load(MODEL_PATH)
 preprocessor = joblib.load(PREPROCESSOR_PATH)
 
-
 # Format Price Function
 def format_price(price):
 
@@ -50,6 +49,15 @@ def predict_price(input_data):
 
         # Predict (log scale)
         prediction_log = model.predict(transformed_data)[0]
+        
+        print("=" * 60)
+        print("Prediction (log scale):", prediction_log)
+        print("=" * 60)
+        
+        predicted_price = np.expm1(prediction_log)
+        
+        print("Predicted Price:", predicted_price)
+        print("=" * 60)
 
         # Convert back to original price
         predicted_price = np.expm1(prediction_log)
