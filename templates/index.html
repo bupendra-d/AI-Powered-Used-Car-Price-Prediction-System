@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Powered Used Car Price Prediction</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+
+
+    <!-- HEADER -->
+
+    <h1>🚗 AI Powered Used Car Price Prediction System</h1>
+
+    <p class="subtitle">
+
+        Predict the estimated resale value of a used vehicle using an
+        XGBoost Machine Learning model trained on thousands of real
+        used-car listings.
+
+    </p>
+
+
+
+    <!-- INPUT FORM -->
+
+    <form action="/predict" method="POST">
+
+
+
+        <!-- BRAND -->
+
+        <label for="brand">Brand</label>
+
+        <select
+            id="brand"
+            name="Brand"
+            required>
+
+            <option value="">Select Brand</option>
+
+        </select>
+
+
+
+        <!-- MODEL -->
+
+        <label for="model">Model</label>
+
+        <select
+            id="model"
+            name="model"
+            required>
+
+            <option value="">Select Model</option>
+
+        </select>
+
+
+
+        <!-- MANUFACTURING YEAR -->
+
+        <label>Manufacturing Year</label>
+
+        <input
+
+            type="number"
+
+            name="Year"
+
+            min="1978"
+
+            max="2026"
+
+            placeholder="Enter manufacturing year"
+
+            required
+        >
+
+
+
+        <!-- KILOMETER DRIVEN -->
+
+        <label>Kilometers Driven</label>
+
+        <input
+
+            type="number"
+
+            name="kmDriven"
+
+            min="0"
+
+            placeholder="Enter kilometers driven"
+
+            required
+
+        >
+
+
+
+        <!-- TRANSMISSION -->
+
+        <label>Transmission</label>
+
+        <select name="Transmission" required>
+
+            <option value="">Select Transmission</option>
+
+            <option value="Manual">Manual</option>
+
+            <option value="Automatic">Automatic</option>
+
+        </select>
+
+
+
+        <!-- OWNER -->
+
+        <label>Owner</label>
+
+        <select name="Owner" required>
+
+            <option value="">Select Owner</option>
+
+            <option value="first">First Owner</option>
+
+            <option value="second">Second Owner</option>
+
+        </select>
+
+
+
+        <!-- FUEL TYPE -->
+
+        <label>Fuel Type</label>
+
+        <select name="FuelType" required>
+
+            <option value="">Select Fuel Type</option>
+
+            <option value="Petrol">Petrol</option>
+
+            <option value="Diesel">Diesel</option>
+
+            <option value="Hybrid">Hybrid</option>
+
+            <option value="Hybrid/CNG">Hybrid/CNG</option>
+
+        </select>
+
+
+
+        <!-- BUTTONS -->
+
+        <div class="button-group">
+
+            <button type="submit">
+
+                🔍 Predict Price
+
+            </button>
+
+            <button
+
+                type="reset"
+
+                class="reset-btn">
+
+                Reset
+
+            </button>
+
+        </div>
+
+    </form>
+
+
+
+    <!-- PREDICTION RESULT -->
+
+    {% if predicted_price %}
+
+    <div class="result">
+
+        <h2>Prediction Result</h2>
+
+        <hr>
+
+
+        <!-- PRICE -->
+
+        <div class="card">
+
+            <h3>💰 Estimated Market Price</h3>
+
+            <div class="price">
+
+                {{ predicted_price }}
+
+            </div>
+
+        </div>
+
+
+
+        <!-- PRICE RANGE -->
+
+        <div class="card">
+
+            <h3>📈 Expected Market Price Range</h3>
+
+            <p>
+
+                {{ lower_price }}
+
+                -
+
+                {{ upper_price }}
+
+            </p>
+
+        </div>
+
+
+
+        <!-- SEGMENT -->
+
+        <div class="card">
+
+            <h3>🚘 Market Segment</h3>
+
+            <span
+                class="badge"
+                style="background: {{ segment_color }};">
+
+                {{ segment }}
+
+            </span>
+
+        </div>
+
+
+        <!-- VEHICLE SUMMARY -->
+
+        <div class="card">
+
+            <h3>🚗 Vehicle Summary</h3>
+
+            <table class="summary-table">
+
+                <tr>
+
+                    <td><strong>Brand</strong></td>
+
+                    <td>{{ brand }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <td><strong>Model</strong></td>
+
+                    <td>{{ model }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <td><strong>Manufacturing Year</strong></td>
+
+                    <td>{{ year }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <td><strong>Fuel Type</strong></td>
+
+                    <td>{{ fuel }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <td><strong>Transmission</strong></td>
+
+                    <td>{{ transmission }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <td><strong>Owner</strong></td>
+
+                    <td>{{ owner }}</td>
+
+                </tr>
+
+                <tr>
+
+                    <td><strong>Kilometers Driven</strong></td>
+
+                    <td>
+
+                        {{ "{:,.0f}".format(km) }} km
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+     
+
+        <!-- RECOMMENDATION -->
+
+        <div class="card">
+
+            <h3>Pricing Insight</h3>
+
+            <p class="recommendation">
+
+                {{pricing_insight}}
+
+            </p>
+
+        </div>
+
+
+
+
+
+
+        <!-- DISCLAIMER -->
+
+        <div class="disclaimer">
+
+            <strong>Disclaimer</strong>
+
+            <br><br>
+
+            This estimated price is generated using 
+            an XGBoost regression model trained 
+            on historical used-car listings.
+
+            Actual selling price may vary depending on
+            vehicle condition, accident history,
+            service records, optional features,
+            city, demand, and negotiation.
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+
+    <!-- FOOTER -->
+
+    <footer>
+        
+        © 2026 AI Powered Used Car Price Prediction System
+        Built with Flask • Scikit-Learn • XGBoost
+
+    </footer>
+
+</div>
+
+
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
