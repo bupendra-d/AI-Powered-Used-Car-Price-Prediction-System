@@ -49,11 +49,6 @@ def predict_price(input_data):
 
         # Predict (log scale)
         prediction_log = model.predict(transformed_data)[0]
-        
-        print("=" * 50)
-        print("Raw Model Prediction:", prediction_log)
-        print("After expm1:", np.expm1(prediction_log))
-        print("=" * 50)
 
         # Convert back to original price
         predicted_price = np.expm1(prediction_log)

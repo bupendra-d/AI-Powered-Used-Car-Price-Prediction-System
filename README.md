@@ -3,6 +3,16 @@
 An end-to-end Machine Learning project that predicts the resale price of used cars using historical market listings. The system leverages advanced regression techniques, feature engineering, and a Flask web application to provide real-time price predictions with business insights.
 
 
+
+# Live Demo
+Experience the deployed application here:
+
+** Live Application:** : https://ai-powered-used-car-price-prediction.onrender.com
+
+Note: This application is deployed on Render's free tier. If the app has been inactive for some time, the initial request may take 30–60 seconds to load while the server wakes up.
+
+
+
 ##  Project Overview
 
 Pricing a used car is a challenging task because resale value depends on multiple interacting factors such as vehicle age, brand, model, fuel type, ownership history, transmission type, and kilometers driven.
@@ -328,6 +338,7 @@ AI Powered Used Car Price Prediction System
 │   .gitignore
 │   app.py
 │   predict.py
+|   images
 │   Procfile
 │   README.md
 │   requirements.txt
@@ -409,7 +420,6 @@ These factors may influence the final selling price.
 #  Future Improvements
 
 Potential enhancements include
-
 - Deep Learning based regression models
 - LightGBM and CatBoost comparison
 - Real-time web scraping of used car listings
